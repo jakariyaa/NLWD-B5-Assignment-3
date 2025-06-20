@@ -11,6 +11,10 @@ app.use(express.json());
 app.use("/api/books", booksRouter);
 app.use("/api/borrow", borrowRouter);
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the Library Management API");
+});
+
 app.use(unknownEndpoint);
 app.use(errorHandler);
 

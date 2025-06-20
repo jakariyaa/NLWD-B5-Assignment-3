@@ -12,6 +12,9 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use("/api/books", books_controller_1.default);
 app.use("/api/borrow", borrow_controller_1.default);
+app.get("/", (req, res) => {
+    res.send("Welcome to the Library Management API");
+});
 app.use(unknown_endpoint_1.unknownEndpoint);
 app.use(error_handler_1.errorHandler);
 exports.default = app;
