@@ -2,6 +2,8 @@
 
 A professional RESTful API for managing a library system, built with **Express.js**, **TypeScript**, and **MongoDB**. This API allows you to manage books and borrowing operations efficiently, with robust validation and error handling.
 
+**Live Demo**: [https://lm-api.jakariya.eu.org/](https://lm-api.jakariya.eu.org/)
+
 ## Features
 
 - **Book Management**
