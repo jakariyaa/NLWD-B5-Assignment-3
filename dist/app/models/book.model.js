@@ -52,12 +52,13 @@ bookSchema.methods.borrowCopies = function (borrowQuantity) {
         throw new Error("Not enough available copies");
     }
     this.copies = this.copies - borrowQuantity;
-};
-// Mongoose middleware (pre-save hook)
-bookSchema.pre("save", function (next) {
-    if (this.copies < 1) {
+    if (this.copies === 0) {
         this.available = false;
     }
+};
+// Mongoose middleware (post-save hook)
+bookSchema.post("save", function (doc, next) {
+    console.log("Book saved:", doc.title);
     next();
 });
 exports.Book = mongoose_1.default.model("Book", bookSchema);

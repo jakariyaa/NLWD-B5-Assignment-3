@@ -19,7 +19,7 @@ export function errorHandler(
       },
     });
     return;
-  } else if (error.name === "MongoServerError" && error.code === 11000) {
+  } else if (error.code === 11000) {
     res.status(400).json({
       success: false,
       message: "Duplicate value rejected",
