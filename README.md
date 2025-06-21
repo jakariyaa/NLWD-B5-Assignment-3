@@ -129,6 +129,7 @@ NLWD-B5-Assignment-3/
 │       ├── middlewares/      # Error & endpoint handlers
 │       └── models/           # Mongoose models
 ├── dist/                     # Compiled JavaScript output
+├── public/                   # Static files
 ├── .env                      # Environment variables
 ├── package.json
 ├── tsconfig.json
