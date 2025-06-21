@@ -67,4 +67,9 @@ bookSchema.post("save", function (doc, next) {
   next();
 });
 
+bookSchema.post("findOneAndDelete", function (doc, next) {
+  doc && console.log("Book deleted:", doc.title);
+  next();
+});
+
 export const Book = mongoose.model("Book", bookSchema);

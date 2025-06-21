@@ -17,3 +17,10 @@ export interface IBook {
 export interface IBookInterfaceMethods {
   borrowCopies(borrowQuantity: number): void;
 }
+
+export interface IBookQueryParams {
+  filter?: keyof IBook["genre"];
+  sortBy?: keyof IBook;
+  sort?: "asc" | "desc";
+  limit?: number;
+}

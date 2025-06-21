@@ -53,8 +53,18 @@ booksRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* (
 // 3. Get Book by ID
 booksRouter.get("/:bookId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { bookId } = req.params;
-    console.log(bookId);
     const book = yield book_model_1.Book.findById(bookId);
+    if (!book) {
+        res.status(404).json({
+            success: false,
+            message: "Book not found",
+            error: {
+                name: "BookNotFound",
+                bookId: bookId,
+            },
+        });
+        return;
+    }
     res.status(200).json({
         success: true,
         message: "Book retrieved successfully",
@@ -62,7 +72,7 @@ booksRouter.get("/:bookId", (req, res) => __awaiter(void 0, void 0, void 0, func
     });
 }));
 // 4. Update Book by ID
-booksRouter.put("/:bookId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+booksRouter.put("/:bookId", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { bookId } = req.params;
     const book = yield book_model_1.Book.findById(bookId);
     if (!book) {
@@ -76,18 +86,34 @@ booksRouter.put("/:bookId", (req, res) => __awaiter(void 0, void 0, void 0, func
         });
         return;
     }
-    book.set(req.body);
-    yield book.save();
-    res.status(200).json({
-        success: true,
-        message: "Book updated successfully",
-        data: book,
-    });
+    try {
+        book.set(req.body);
+        yield book.save();
+        res.status(200).json({
+            success: true,
+            message: "Book updated successfully",
+            data: book,
+        });
+    }
+    catch (error) {
+        next(error);
+    }
 }));
 // 5. Delete Book by ID
 booksRouter.delete("/:bookId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { bookId } = req.params;
-    yield book_model_1.Book.findByIdAndDelete(bookId);
+    const book = yield book_model_1.Book.findByIdAndDelete(bookId);
+    if (!book) {
+        res.status(404).json({
+            success: false,
+            message: "Book not found",
+            error: {
+                name: "BookNotFound",
+                bookId: bookId,
+            },
+        });
+        return;
+    }
     res.status(200).json({
         success: true,
         message: "Book deleted successfully",
