@@ -61,6 +61,14 @@ bookSchema.methods.borrowCopies = function (borrowQuantity: number) {
   }
 };
 
+// Mongoose middleware (pre-save hook)
+bookSchema.pre("save", function (next) {
+  if (this.copies > 0) {
+    this.available = true;
+  }
+  next();
+});
+
 // Mongoose middleware (post-save hook)
 bookSchema.post("save", function (doc, next) {
   console.log("Book saved:", doc.title);

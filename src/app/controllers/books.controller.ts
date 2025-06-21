@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { IBook, IBookQueryParams } from "../interfaces/book.interface";
+import { IBookQueryParams } from "../interfaces/book.interface";
 import { Book } from "../models/book.model";
 
 const booksRouter = Router();

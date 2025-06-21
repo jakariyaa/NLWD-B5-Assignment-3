@@ -1,5 +1,4 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { IBorrow } from "../interfaces/borrow.interface";
 import { Borrow } from "../models/borrow.model";
 import { Book } from "../models/book.model";
 
@@ -55,35 +54,27 @@ borrowRouter.get(
   "/",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const summary = await Borrow.aggregate([
-        {
-          $group: {
-            _id: "$book",
-            totalQuantity: { $sum: "$quantity" },
+      const summary = await Borrow.aggregate()
+        .group({
+          _id: "$book",
+          totalQuantity: { $sum: "$quantity" },
+        })
+        .lookup({
+          from: "books",
+          localField: "_id",
+          foreignField: "_id",
+          as: "bookInfo",
+        })
+        .unwind("$bookInfo")
+        .project({
+          _id: 0,
+          book: {
+            title: "$bookInfo.title",
+            isbn: "$bookInfo.isbn",
           },
-        },
-        {
-          $lookup: {
-            from: "books",
-            localField: "_id",
-            foreignField: "_id",
-            as: "bookInfo",
-          },
-        },
-        {
-          $unwind: "$bookInfo",
-        },
-        {
-          $project: {
-            _id: 0,
-            book: {
-              title: "$bookInfo.title",
-              isbn: "$bookInfo.isbn",
-            },
-            totalQuantity: 1,
-          },
-        },
-      ]);
+          totalQuantity: 1,
+        })
+        .exec();
 
       res.json({
         success: true,
