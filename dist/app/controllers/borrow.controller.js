@@ -58,35 +58,27 @@ borrowRouter.post("/", (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 // 7. Borrowed Books Summary (Using Aggregation)
 borrowRouter.get("/", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const summary = yield borrow_model_1.Borrow.aggregate([
-            {
-                $group: {
-                    _id: "$book",
-                    totalQuantity: { $sum: "$quantity" },
-                },
+        const summary = yield borrow_model_1.Borrow.aggregate()
+            .group({
+            _id: "$book",
+            totalQuantity: { $sum: "$quantity" },
+        })
+            .lookup({
+            from: "books",
+            localField: "_id",
+            foreignField: "_id",
+            as: "bookInfo",
+        })
+            .unwind("$bookInfo")
+            .project({
+            _id: 0,
+            book: {
+                title: "$bookInfo.title",
+                isbn: "$bookInfo.isbn",
             },
-            {
-                $lookup: {
-                    from: "books",
-                    localField: "_id",
-                    foreignField: "_id",
-                    as: "bookInfo",
-                },
-            },
-            {
-                $unwind: "$bookInfo",
-            },
-            {
-                $project: {
-                    _id: 0,
-                    book: {
-                        title: "$bookInfo.title",
-                        isbn: "$bookInfo.isbn",
-                    },
-                    totalQuantity: 1,
-                },
-            },
-        ]);
+            totalQuantity: 1,
+        })
+            .exec();
         res.json({
             success: true,
             message: "Borrowed books summary retrieved successfully",
