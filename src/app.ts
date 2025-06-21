@@ -7,7 +7,10 @@ import { unknownEndpoint } from "./app/middlewares/unknown.endpoint";
 const app = express();
 
 app.use(express.json());
-app.use(express.static("public"));
+
+app.get("/", (req, res) => {
+  res.send("Welcome to the Library Management API");
+});
 
 app.use("/api/books", booksRouter);
 app.use("/api/borrow", borrowRouter);
