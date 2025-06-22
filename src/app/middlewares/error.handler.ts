@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { MongoError } from "../interfaces/error.interface";
 
-export function errorHandler(
+export function globalErrorHandler(
   error: MongoError,
   req: Request,
   res: Response,
