@@ -16,5 +16,5 @@ app.get("/", (req, res) => {
 app.use("/api/books", books_controller_1.default);
 app.use("/api/borrow", borrow_controller_1.default);
 app.use(unknown_endpoint_1.unknownEndpoint);
-app.use(error_handler_1.errorHandler);
+app.use(error_handler_1.globalErrorHandler);
 exports.default = app;

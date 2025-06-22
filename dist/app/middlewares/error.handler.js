@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.errorHandler = errorHandler;
-function errorHandler(error, req, res, next) {
+exports.globalErrorHandler = globalErrorHandler;
+function globalErrorHandler(error, req, res, next) {
     console.error(`Error occurred: ${error.name} \n`, error.message);
     if (error.name === "ValidationError") {
         res.status(400).json({
