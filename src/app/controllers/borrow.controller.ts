@@ -14,8 +14,7 @@ borrowRouter.post(
         res.status(404).json({
           success: false,
           message: "Book not found",
-          error: {
-            name: "BookNotFound",
+          info: {
             bookId: req.body.book,
           },
         });
@@ -35,8 +34,7 @@ borrowRouter.post(
       res.status(400).json({
         success: false,
         message: "Not enough available copies",
-        error: {
-          name: "BookNotAvailable",
+        info: {
           bookId: req.body.book,
           bookTitle: book.title,
           availableCopies: book.copies,

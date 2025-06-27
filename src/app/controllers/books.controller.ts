@@ -61,8 +61,7 @@ booksRouter.get("/:bookId", async (req: Request, res: Response) => {
     res.status(404).json({
       success: false,
       message: "Book not found",
-      error: {
-        name: "BookNotFound",
+      info: {
         bookId: bookId,
       },
     });
@@ -85,8 +84,7 @@ booksRouter.put(
       res.status(404).json({
         success: false,
         message: "Book not found",
-        error: {
-          name: "BookNotFound",
+        info: {
           bookId: bookId,
         },
       });
@@ -114,8 +112,7 @@ booksRouter.delete("/:bookId", async (req: Request, res: Response) => {
     res.status(404).json({
       success: false,
       message: "Book not found",
-      error: {
-        name: "BookNotFound",
+      info: {
         bookId: bookId,
       },
     });

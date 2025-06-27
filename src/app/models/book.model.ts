@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { IBookInterfaceMethods, IBook } from "../interfaces/book.interface";
-import validator from "validator";
 
 const bookSchema = new mongoose.Schema<
   IBook,
@@ -13,10 +12,6 @@ const bookSchema = new mongoose.Schema<
       type: String,
       required: true,
       trim: true,
-      validate: {
-        validator: (value: string) => /^[a-zA-Z'. -]+$/.test(value),
-        message: "Invalid author name",
-      },
     },
     genre: {
       type: String,
@@ -31,7 +26,6 @@ const bookSchema = new mongoose.Schema<
       required: true,
     },
     isbn: {
-      validate: [validator.isISBN, "Invalid ISBN"],
       type: String,
       required: true,
       unique: true,
