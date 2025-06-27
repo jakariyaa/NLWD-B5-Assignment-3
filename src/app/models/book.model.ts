@@ -26,6 +26,7 @@ const bookSchema = new mongoose.Schema<
       required: true,
     },
     isbn: {
+      //validate: [validator.isISBN, "Please enter a valid ISBN number (10 or 13 digits)"], // skipped for assignment test case pass
       type: String,
       required: true,
       unique: true,

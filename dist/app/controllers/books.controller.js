@@ -54,8 +54,7 @@ booksRouter.get("/:bookId", (req, res) => __awaiter(void 0, void 0, void 0, func
         res.status(404).json({
             success: false,
             message: "Book not found",
-            error: {
-                name: "BookNotFound",
+            info: {
                 bookId: bookId,
             },
         });
@@ -75,8 +74,7 @@ booksRouter.put("/:bookId", (req, res, next) => __awaiter(void 0, void 0, void 0
         res.status(404).json({
             success: false,
             message: "Book not found",
-            error: {
-                name: "BookNotFound",
+            info: {
                 bookId: bookId,
             },
         });
@@ -103,8 +101,7 @@ booksRouter.delete("/:bookId", (req, res) => __awaiter(void 0, void 0, void 0, f
         res.status(404).json({
             success: false,
             message: "Book not found",
-            error: {
-                name: "BookNotFound",
+            info: {
                 bookId: bookId,
             },
         });
